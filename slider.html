@@ -1,0 +1,36 @@
+<div>
+    <script src="swiper.min.js"></script>
+    <div id="slider" class="swiper-container swiper-container-initialized swiper-container-horizontal" style="z-index: 0">
+       <div class="swiper-wrapper">
+          <div class="swiper-slide swiper-slide-active"><img src="imgs/a.png"></img></div>
+          <div class="swiper-slide swiper-slide-next"><img src="imgs/b.png"></img></div>
+          <div class="swiper-slide"><img src="imgs/c.png"></img></div>
+          <div class="swiper-slide"><img src="imgs/d.png"></img></div>
+          <div class="swiper-slide"><img src="imgs/e.png"></img></div>
+       </div>
+       <div class="swiper-pagination swiper-pagination-progressbar"><span class="swiper-pagination-progressbar-fill" style="transform: translate3d(0px, 0px, 0px) scaleX(0.1) scaleY(1); transition-duration: 300ms;"></span></div>
+       <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"></div>
+       <div class="swiper-button-prev swiper-button-disabled" tabindex="0" role="button" aria-label="Previous slide" aria-disabled="true"></div>
+       <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+    </div>
+    <script>
+       $.getScript("swiper.min.js", function(){
+          var swiper = new Swiper('.swiper-container', {
+             spaceBetween: 30,
+             centeredSlides: true,
+             loop: true,
+             autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+             },
+             pagination: {
+                el: '.swiper-pagination',
+                type: 'progressbar',
+             },navigation: {
+             nextEl: '.swiper-button-next',
+             prevEl: '.swiper-button-prev',
+          },
+          });
+       });
+    </script>
+ </div>
