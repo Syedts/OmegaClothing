@@ -1,0 +1,147 @@
+-- MariaDB dump 10.17  Distrib 10.4.11-MariaDB, for Win64 (AMD64)
+--
+-- Host: localhost    Database: test
+-- ------------------------------------------------------
+-- Server version	10.4.11-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `item_img_list`
+--
+
+DROP TABLE IF EXISTS `item_img_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_img_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `path` varchar(256) NOT NULL,
+  `file` varchar(64) NOT NULL,
+  `extension` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_img_list`
+--
+
+LOCK TABLES `item_img_list` WRITE;
+/*!40000 ALTER TABLE `item_img_list` DISABLE KEYS */;
+INSERT INTO `item_img_list` VALUES (1,'/imgs/','a','png'),(2,'/imgs/','b','png'),(3,'/imgs/','c','png'),(4,'/imgs/','d','png');
+/*!40000 ALTER TABLE `item_img_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_img_transaction`
+--
+
+DROP TABLE IF EXISTS `item_img_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_img_transaction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `item_img_id1` int(11) NOT NULL,
+  `item_img_id2` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `operation` enum('ADD','REMOVE','SWAP','') NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `item_id` (`item_id`),
+  KEY `item_img_id1` (`item_img_id1`),
+  KEY `item_img_id2` (`item_img_id2`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `item_img_transaction_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item_list` (`id`),
+  CONSTRAINT `item_img_transaction_ibfk_2` FOREIGN KEY (`item_img_id1`) REFERENCES `item_img_list` (`id`),
+  CONSTRAINT `item_img_transaction_ibfk_3` FOREIGN KEY (`item_img_id2`) REFERENCES `item_img_list` (`id`),
+  CONSTRAINT `item_img_transaction_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_img_transaction`
+--
+
+LOCK TABLES `item_img_transaction` WRITE;
+/*!40000 ALTER TABLE `item_img_transaction` DISABLE KEYS */;
+INSERT INTO `item_img_transaction` VALUES (4,1,1,NULL,8,'ADD'),(5,1,2,NULL,8,'ADD'),(6,1,3,NULL,8,'ADD'),(7,1,4,NULL,8,'ADD');
+/*!40000 ALTER TABLE `item_img_transaction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_list`
+--
+
+DROP TABLE IF EXISTS `item_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `size` int(11) NOT NULL,
+  `gender` enum('MEN','WOMEN','UNISEX','') NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `is_hidden` tinyint(1) NOT NULL,
+  `is_unable` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_list`
+--
+
+LOCK TABLES `item_list` WRITE;
+/*!40000 ALTER TABLE `item_list` DISABLE KEYS */;
+INSERT INTO `item_list` VALUES (1,'test',100,4,2,'MEN','description test',0,0),(4,'test',100,4,2,'MEN','dsiuhfdsuhikfkdu',0,0),(5,'test',100,4,2,'UNISEX','',0,0),(6,'test',100,4,2,'UNISEX','',0,0),(7,'test',100,4,2,'MEN','',0,0),(8,'test',100,4,2,'MEN','',0,0),(9,'test',100,4,2,'MEN','',0,0),(10,'test',100,4,2,'MEN','',0,0);
+/*!40000 ALTER TABLE `item_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password_salt` varchar(256) NOT NULL,
+  `administrator` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (8,'a@a','a','$2y$10$SOshu8GpSC59pp5t6Q0kDufQbbE1KkFY8IRzcM.QYACjEuvIS045K',0),(9,'kjhkjhkjh@bvnb','Flathead2','$2y$10$i6IDLD/zVsM6veUJvZe/muRHYr5VPaUsHW7F1O6pirojbhT2qWO.C',0),(10,'admin@omega.com','admin','$2y$10$gIeQ/pPjGKByoeldqPgxZuaKI4bf260z4K/dOEz.0sTG2EhJ6N8Ju',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-04-10 23:06:43
